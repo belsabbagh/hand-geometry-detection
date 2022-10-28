@@ -5,9 +5,9 @@ name = "pypi"
 
 [packages]
 numpy = "*"
-opencv-python = "*"
 matplotlib = "*"
 pandas = "*"
+opencv-contrib-python = "*"
 
 [dev-packages]
 

@@ -1,0 +1,3 @@
+L = 256
+PEAK_INTENSITY = L - 1
+BLACK = 0

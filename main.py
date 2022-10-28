@@ -1,17 +1,19 @@
 """Main Module"""
 import cv2
 import pandas as pd
-from src.helpers.scale_img import scale_img
-from src.helpers.convert_to_grayscale import convert_to_grayscale
-from src.helpers.convert_to_float32 import convert_to_float32
+
+from src.img_ops.get_shape import get_shape
+from src.img_ops.read_img import read_img_grayscale, read_img
+from src.img_ops.scale_img import scale_img
+from src.img_ops.convert_to_float32 import convert_to_float32
 
 
-IMAGE_FOLDER_PATH = 'data/training'
+TRAINING_DATASET_PATH = 'data/training'
 HANDS_METADATA = pd.read_csv('data/HandInfo.csv')
 
 if __name__ == '__main__':
-    test_img = cv2.imread(f"{IMAGE_FOLDER_PATH}/Hand_0000002.jpg")
-    test_img = convert_to_grayscale(test_img)
+    test_img = read_img_grayscale(f"{TRAINING_DATASET_PATH}/Hand_0000002.jpg")
+    print(get_shape(test_img))
     operatedImage = convert_to_float32(test_img)
     dest = cv2.cornerHarris(operatedImage, 2, 7, 0.07)
     dest = cv2.dilate(dest, None)

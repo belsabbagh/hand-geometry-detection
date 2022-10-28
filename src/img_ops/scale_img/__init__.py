@@ -1,5 +1,5 @@
 """
-A module that has a helpers function that helps with scaling images.
+A module that has a img_ops function that helps with scaling images.
 """
 
 import cv2
