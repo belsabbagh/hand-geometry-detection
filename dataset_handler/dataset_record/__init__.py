@@ -1,7 +1,6 @@
 """
 This module contains the structure and methods of a single dataset record
 """
-from dataset_handler.metadata_handler import get_img_metadata
 
 
 class DatasetRecord:
