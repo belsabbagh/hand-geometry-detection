@@ -1,11 +1,11 @@
 """
-A module that has a img_ops function that helps with scaling images.
+A module that has a helper function that helps with scaling images.
 """
 
 import cv2
 
 
-def scale_img(img, scale_coefficient: float = 1):
+def scale_img(img, scale_coefficient: float):
     """
 
     :param img: The given image
@@ -19,3 +19,7 @@ def scale_img(img, scale_coefficient: float = 1):
     height = int(img.shape[0] * scale_coefficient)
     dim = (width, height)
     return cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+
+
+def resize_img(img, width, height):
+    return cv2.resize(img, (width, height), interpolation=cv2.INTER_AREA)

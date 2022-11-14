@@ -30,6 +30,3 @@
     - Websites
     - Textbooks
     - Research papers
-
-### Phase 2
-

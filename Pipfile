@@ -8,6 +8,10 @@ numpy = "*"
 matplotlib = "*"
 pandas = "*"
 opencv-contrib-python = "*"
+tesnorflow="*"
+keras="*"
+scikit-learn="*"
+scipy="*"
 
 [dev-packages]
 
