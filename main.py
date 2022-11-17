@@ -1,6 +1,7 @@
 """Main Module"""
 from timeit import default_timer as time
 
+from src.config.messages import dataset_load_msg, dataset_split_msg
 from src.dataset_handler import load_dataset, split_dataset
 
 if __name__ == '__main__':
@@ -8,6 +9,6 @@ if __name__ == '__main__':
     test_train_ratio = 0.15
     start = time()
     dataset = load_dataset(dir_path, metadata_file)
-    print(f'{len(dataset)} records were loaded from {dir_path} in {round(time() - start, 2)} seconds.')
+    print(dataset_load_msg(len(dataset), dir_path, start, 3))
     train_dataset, test_dataset = split_dataset(dataset, test_train_ratio)
-    print(f'Divided dataset into {len(train_dataset)} training records and {len(test_dataset)} testing records.')
+    print(dataset_split_msg(len(train_dataset), len(test_dataset)))
