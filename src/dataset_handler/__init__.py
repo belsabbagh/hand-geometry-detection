@@ -5,7 +5,7 @@ import pandas as pd
 
 from src.dataset_handler.config import IMAGE_NAME
 from src.dataset_handler.dataset_record import DatasetRecord, Metadata
-from src.img_loader import load_img
+from src.dataset_handler.img_loader import load_img
 
 metadata: pd.DataFrame = pd.DataFrame()
 
