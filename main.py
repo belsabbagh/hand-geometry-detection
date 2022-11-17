@@ -1,17 +1,13 @@
 """Main Module"""
 from timeit import default_timer as time
 
-import pandas as pd
-
-from src.dataset_handler import load_dataset
+from src.dataset_handler import load_dataset, split_dataset
 
 if __name__ == '__main__':
-    train_path, test_path, metadata_file = 'data\\train', 'data\\test', 'data\\HandInfo.csv'
-
+    dir_path, metadata_file = 'data\\train', 'data\\HandInfo.csv'
+    test_train_ratio = 0.15
     start = time()
-    train_dataset = load_dataset(train_path, metadata_file)
-    print(f'{len(train_dataset)} training records were loaded from {train_path} in {round(time() - start, 2)} seconds.')
-
-    start = time()
-    test_dataset = load_dataset(test_path, metadata_file)
-    print(f'{len(test_dataset)} testing records were loaded from {test_path} in {round(time() - start, 2)} seconds.')
+    dataset = load_dataset(dir_path, metadata_file)
+    print(f'{len(dataset)} records were loaded from {dir_path} in {round(time() - start, 2)} seconds.')
+    train_dataset, test_dataset = split_dataset(dataset, test_train_ratio)
+    print(f'Divided dataset into {len(train_dataset)} training records and {len(test_dataset)} testing records.')

@@ -1,5 +1,20 @@
+"""
+This module handles loading the dataset in a pandas DataFrame.
+
+Required inputs:
+    1. A directory with images.
+    2. A csv file with metadata indexed by image file name.
+
+Main function:
+    load_dataset
+
+Known issues:
+    The metadata file cannot be in the same directory as the images.
+"""
+
 from os import listdir
-from os.path import isfile, join
+from os.path import join
+from sklearn.model_selection import train_test_split
 
 import pandas as pd
 
@@ -33,7 +48,7 @@ def load_dataset(dir_path: str, metadata_path: str) -> pd.DataFrame:
     """
     global metadata
     metadata = pd.read_csv(metadata_path, index_col=IMAGE_NAME)
-    return pd.DataFrame([create_record(dir_path, f) for f in listdir(dir_path) if isfile(join(dir_path, f))])
+    return pd.DataFrame([create_record(dir_path, f) for f in listdir(dir_path)])
 
 
 def create_record(dir_path: str, img_name: str) -> DatasetRecord:
@@ -47,3 +62,7 @@ def create_record(dir_path: str, img_name: str) -> DatasetRecord:
     :rtype: src.dataset_handler.dataset_record.DatasetRecord
     """
     return DatasetRecord(load_img(join(dir_path, img_name)), img_name, Metadata(get_img_metadata(img_name)))
+
+
+def split_dataset(dataset, split_factor):
+    return train_test_split(dataset, test_size=split_factor)
