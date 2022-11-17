@@ -1,11 +1,17 @@
 """Main Module"""
-from timeit import default_timer
+from timeit import default_timer as time
 
-from dataset_handler import load_dataset
+import pandas as pd
+
+from src.dataset_handler import load_dataset
 
 if __name__ == '__main__':
-    training_path, metadata_file = 'data\\train', 'data/HandInfo.csv'
-    start = default_timer()
-    dataset = load_dataset(training_path, metadata_file)
-    time = default_timer() - start
-    print(f'{len(dataset)} records were loaded from {training_path} in {time} seconds.')
+    train_path, test_path, metadata_file = 'data\\train', 'data\\test', 'data\\HandInfo.csv'
+
+    start = time()
+    train_dataset = load_dataset(train_path, metadata_file)
+    print(f'{len(train_dataset)} training records were loaded from {train_path} in {round(time() - start, 2)} seconds.')
+
+    start = time()
+    test_dataset = load_dataset(test_path, metadata_file)
+    print(f'{len(test_dataset)} testing records were loaded from {test_path} in {round(time() - start, 2)} seconds.')
