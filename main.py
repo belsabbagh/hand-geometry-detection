@@ -1,88 +1,12 @@
 """Main Module"""
 import copy
 import math
-from timeit import default_timer as time
 
 import cv2
 import numpy as np
 
-from src.classifier import get_detection_data
-from src.config.messages import dataset_load_msg
-from src.contour import find_contours
-from src.dataset import load_dataset
-from src.gray_level_transformations import slice_gray_level
-from src.image_ops import load_cascade_classifier, read_img_grayscale, show_img, convert_img_to_color, read_img
+from src.image_ops import read_img
 from src.image_ops.scale_img import scale_img
-
-
-def test_1():
-    """
-    Dataset loading
-    """
-    dir_path, metadata_file = 'data', 'data\\HandInfo.csv'
-    test_train_ratio = 0.15
-    categories = ['dorsal left', 'dorsal right', 'palmar left', 'palmar right']
-    start = time()
-    dataset = load_dataset(dir_path, categories, metadata_file)
-    elapsed = round(time() - start, 5)
-    print(dataset_load_msg(len(dataset), dir_path, elapsed))
-    # train_dataset, test_dataset = split_dataset(dataset, test_train_ratio)
-    # print(dataset_split_msg(len(train_dataset), len(test_dataset)))
-    """
-        Training
-        """
-    """
-        Testing
-        """
-    cc = load_cascade_classifier('data/dorsal left/classifier/cascade.xml')
-    correct = []
-    incorrect = []
-    # results = get_detection_data(read_img('data/dorsal-left-test.jpg'), cc, (120, 120))
-    # if results is None:
-    #     incorrect.append(1)
-    # else:
-    #     correct.append(1)
-    for file_path, record in dataset.items():
-        results = get_detection_data(record.get_image(), cc, (120, 120))
-        if results is not None and record.get_metadata().get_hand_aspect() == 'dorsal left':
-            correct.append(record)
-            continue
-        incorrect.append(record)
-    print(correct)
-    print(incorrect)
-
-
-def pre_test():
-    img_path = r'data\hand.png'
-    img = scale_img(read_img_grayscale(img_path), 0.4)
-    res = slice_gray_level(img, 75, 230)
-    edged = cv2.Canny(res, 75, 230)
-    contours, _ = find_contours(edged)
-    res = convert_img_to_color(res)
-    polygon_approximations = [approx_contour(contour) for contour in contours]
-    for approx in polygon_approximations:
-        draw_contours(res, approx)
-        print(len(approx))
-        i, j = approx[0][0]
-        if len(approx) == 10:
-            put_text_on_image(res, 'hand', i - 20, j - 20)
-    show_img('res', res)
-
-
-def put_text_on_image(res, text, x, y):
-    return cv2.putText(res, text, (x, y), cv2.FONT_HERSHEY_COMPLEX, 1, 0, 2)
-
-
-def draw_contours(img, contour):
-    return cv2.drawContours(img, [contour], -1, (0, 255, 0), 3)
-
-
-def approx_contour(contour):
-    return cv2.approxPolyDP(contour, epsilon(contour), True)
-
-
-def epsilon(contour, coefficient=0.01):
-    return coefficient * cv2.arcLength(contour, True)
 
 
 def calculate_fingers(res, drawing):
@@ -148,6 +72,7 @@ def test_3():
     print("Fingers", cnt)
     cv2.imshow('output', drawing)
     cv2.waitKey(0)
+
 
 if __name__ == '__main__':
     test_3()
