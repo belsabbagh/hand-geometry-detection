@@ -1,16 +1,21 @@
 from os.path import isfile, join
 
-from src.img_ops import read_img
+from src.image_ops.gray_level_transformations import slice_gray_level
+from src.image_ops import read_img, blur_img, convert_to_grayscale
+from src.image_ops.scale_img import scale_img
 
 
-def process_img(img):
+def process_img(_img):
     """
-    Processes the given img before saving it in the dataset.
+    Processes the given img before saving it in the dataset_handler.
     Parameters:
-        img: The original image
+        _img: The original image
     """
     # TODO pre-processing goes here
-    return img
+    img = blur_img(convert_to_grayscale(_img), 5)
+    img = scale_img(img, 0.4)
+    res = slice_gray_level(img, 75, 230)
+    return res
 
 
 def load_img(file_path):

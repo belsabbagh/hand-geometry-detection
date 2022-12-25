@@ -1,5 +1,5 @@
 """
-This module handles loading the dataset in a pandas DataFrame.
+This module handles loading the dataset_handler in a dictionary indexed by the file path containing objects of each record.
 
 Required inputs:
     1. A directory with images.
@@ -12,14 +12,13 @@ Known issues:
     The metadata file cannot be in the same directory as the images.
 """
 
-from os import listdir
-from os.path import join
+from os import listdir, path
 from sklearn.model_selection import train_test_split
 
 import pandas as pd
 
 from src.dataset_handler.config import IMAGE_NAME
-from src.dataset_handler.dataset_record import DatasetRecord, Metadata
+from src.dataset_handler.record import DatasetRecord, Metadata
 from src.dataset_handler.img_loader import load_img
 
 metadata: pd.DataFrame = pd.DataFrame()
@@ -36,32 +35,40 @@ def get_img_metadata(index: str) -> dict[str:int]:
     return (metadata.loc[index]).to_dict()
 
 
-def load_dataset(dir_path: str, metadata_path: str) -> pd.DataFrame:
+def load_dataset(dir_path: str, categories: list[str], metadata_path: str) -> dict[str:DatasetRecord]:
     """
-    Creates a dataset from an image directory and a metadata file path.
+    Creates a dataset_handler from an image directory and a metadata file path.
+    :param categories: categories of classified images
+    :type categories: List[str]
     :param dir_path: Image directory path.
     :type dir_path: str
     :param metadata_path: Metadata file path.
     :type metadata_path: str
-    :return: A DataFrame of the loaded image dataset.
-    :rtype: pd.DataFrame
+    :return: A DataFrame of the loaded image dataset_handler.
+    :rtype: Dict[str, DatasetRecord]
     """
     global metadata
     metadata = pd.read_csv(metadata_path, index_col=IMAGE_NAME)
-    return pd.DataFrame([create_record(dir_path, f) for f in listdir(dir_path)])
+    dataset = {}
+    for cat in categories:
+        cat_path = path.join(dir_path, cat, 'p')
+        print(cat_path)
+        for f in listdir(cat_path):
+            img_path = path.join(cat_path, f)
+            dataset[img_path] = create_record(img_path)
+    return dataset
 
 
-def create_record(dir_path: str, img_name: str) -> DatasetRecord:
+def create_record(file_path: str) -> DatasetRecord:
     """
-    Creates a dataset record from a given image file in a directory.
-    :param dir_path: Path of image directory.
-    :type dir_path: str
-    :param img_name: Image file name.
-    :type img_name: str
+    Creates a dataset_handler record from a given image file in a directory.
+    :param file_path: Path of image file.
+    :type file_path: str
     :return: A DatasetRecord for this image.
-    :rtype: src.dataset_handler.dataset_record.DatasetRecord
+    :rtype: src.dataset_handler.record.DatasetRecord
     """
-    return DatasetRecord(load_img(join(dir_path, img_name)), img_name, Metadata(get_img_metadata(img_name)))
+    img_name = path.basename(file_path)
+    return DatasetRecord(load_img(file_path), file_path, Metadata(get_img_metadata(img_name)))
 
 
 def split_dataset(dataset, split_factor):
