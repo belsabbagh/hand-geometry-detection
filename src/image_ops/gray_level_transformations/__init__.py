@@ -1,12 +1,11 @@
 import numpy as np
 
-from src.gray_level_transformations import base_transform
-from src.gray_level_transformations.base_transform import base_transform
-from src.gray_level_transformations.gamma_correction import gamma_correction_function
-from src.gray_level_transformations.log_transform import log_transform_function
-from src.gray_level_transformations.negative_transform import negative_transformation_function
-from src.gray_level_transformations.slice_gray_level import gray_level_slice_function
-from src.gray_level_transformations.stretch_contrast import ignore_percentage, contrast_stretch_function
+from src.image_ops.gray_level_transformations.base_transform import base_transform
+from src.image_ops.gray_level_transformations.gamma_correction import gamma_correction_function
+from src.image_ops.gray_level_transformations.log_transform import log_transform_function
+from src.image_ops.gray_level_transformations.negative_transform import negative_transformation_function
+from src.image_ops.gray_level_transformations.slice_gray_level import gray_level_slice_function
+from src.image_ops.gray_level_transformations.stretch_contrast import ignore_percentage, contrast_stretch_function
 
 
 def binary_threshold(img, thr):

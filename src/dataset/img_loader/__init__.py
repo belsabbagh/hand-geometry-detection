@@ -1,8 +1,6 @@
 from os.path import isfile, join
 
-import cv2
-
-from src.gray_level_transformations import slice_gray_level
+from src.image_ops.gray_level_transformations import slice_gray_level
 from src.image_ops import read_img, blur_img, convert_to_grayscale
 from src.image_ops.scale_img import scale_img
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.image_histogram import generate_image_histogram
+from src.image_ops.image_histogram import generate_image_histogram
 
 
 def cutoff_fraction(img, c):

@@ -1,5 +1,5 @@
 from src import image_ops
-from src.image_histogram import generate_image_histogram
+from src.image_ops.image_histogram import generate_image_histogram
 
 
 def ignore_percentage(img, percent):
