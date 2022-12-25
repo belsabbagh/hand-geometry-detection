@@ -49,3 +49,19 @@ def convert_img_to_color(img):
 
 def convert_to_grayscale(img):
     return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+
+def put_text_on_image(res, text, x, y):
+    return cv2.putText(res, text, (x, y), cv2.FONT_HERSHEY_COMPLEX, 1, 0, 2)
+
+
+def draw_contours(img, contour, color=(0, 255, 0), thickness=3):
+    return cv2.drawContours(img, contour, 0, color, thickness)
+
+
+def approx_contour(contour):
+    return cv2.approxPolyDP(contour, epsilon(contour), True)
+
+
+def epsilon(contour, coefficient=0.01):
+    return coefficient * cv2.arcLength(contour, True)
