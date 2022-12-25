@@ -1,12 +1,12 @@
 """
-This module contains the structure and methods of a single dataset record
+This module contains the structure and methods of a single dataset_handler record
 """
-from src.dataset.config import IRREGULARITIES, ASPECT_OF_HAND, NAIL_POLISH, ACCESSORIES, SKIN_COLOR, GENDER, AGE, ID
+from src.dataset_handler.config import IRREGULARITIES, ASPECT_OF_HAND, NAIL_POLISH, ACCESSORIES, SKIN_COLOR, GENDER, AGE, ID
 
 
 class DatasetRecord:
     """
-    The data structure that stores a record of the dataset.
+    The data structure that stores a record of the dataset_handler.
     """
     __img = None
     __img_path = None

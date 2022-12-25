@@ -7,7 +7,7 @@ from src.image_ops.scale_img import scale_img
 
 def process_img(_img):
     """
-    Processes the given img before saving it in the dataset.
+    Processes the given img before saving it in the dataset_handler.
     Parameters:
         _img: The original image
     """

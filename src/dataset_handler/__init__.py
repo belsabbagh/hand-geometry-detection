@@ -1,5 +1,5 @@
 """
-This module handles loading the dataset in a dictionary indexed by the file path containing objects of each record.
+This module handles loading the dataset_handler in a dictionary indexed by the file path containing objects of each record.
 
 Required inputs:
     1. A directory with images.
@@ -17,9 +17,9 @@ from sklearn.model_selection import train_test_split
 
 import pandas as pd
 
-from src.dataset.config import IMAGE_NAME
-from src.dataset.record import DatasetRecord, Metadata
-from src.dataset.img_loader import load_img
+from src.dataset_handler.config import IMAGE_NAME
+from src.dataset_handler.record import DatasetRecord, Metadata
+from src.dataset_handler.img_loader import load_img
 
 metadata: pd.DataFrame = pd.DataFrame()
 
@@ -37,14 +37,14 @@ def get_img_metadata(index: str) -> dict[str:int]:
 
 def load_dataset(dir_path: str, categories: list[str], metadata_path: str) -> dict[str:DatasetRecord]:
     """
-    Creates a dataset from an image directory and a metadata file path.
+    Creates a dataset_handler from an image directory and a metadata file path.
     :param categories: categories of classified images
     :type categories: List[str]
     :param dir_path: Image directory path.
     :type dir_path: str
     :param metadata_path: Metadata file path.
     :type metadata_path: str
-    :return: A DataFrame of the loaded image dataset.
+    :return: A DataFrame of the loaded image dataset_handler.
     :rtype: Dict[str, DatasetRecord]
     """
     global metadata
@@ -61,7 +61,7 @@ def load_dataset(dir_path: str, categories: list[str], metadata_path: str) -> di
 
 def create_record(file_path: str) -> DatasetRecord:
     """
-    Creates a dataset record from a given image file in a directory.
+    Creates a dataset_handler record from a given image file in a directory.
     :param file_path: Path of image file.
     :type file_path: str
     :return: A DatasetRecord for this image.
