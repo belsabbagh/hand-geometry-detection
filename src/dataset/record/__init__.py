@@ -1,8 +1,7 @@
 """
 This module contains the structure and methods of a single dataset record
 """
-from src.dataset_handler.config import IRREGULARITIES, IMAGE_NAME, ASPECT_OF_HAND, NAIL_POLISH, ACCESSORIES, \
-    SKIN_COLOR, GENDER, AGE, ID
+from src.dataset.config import IRREGULARITIES, ASPECT_OF_HAND, NAIL_POLISH, ACCESSORIES, SKIN_COLOR, GENDER, AGE, ID
 
 
 class DatasetRecord:
@@ -10,12 +9,12 @@ class DatasetRecord:
     The data structure that stores a record of the dataset.
     """
     __img = None
-    __img_name = None
+    __img_path = None
     __metadata = None
 
-    def __init__(self, _img, __img_name, _img_metadata):
+    def __init__(self, _img, __img_path, _img_metadata):
         self.__img = _img
-        self.__img_name = __img_name
+        self.__img_path = __img_path
         self.__metadata = _img_metadata
 
     def __repr__(self):
@@ -24,8 +23,14 @@ class DatasetRecord:
     def get_image(self):
         return self.__img
 
+    def get_image_path(self):
+        return self.__img_path
+
     def get_metadata(self):
         return self.__metadata
+
+    def tolist(self):
+        return [self.__img, self.__img_path, self.__metadata]
 
 
 class Metadata:
@@ -54,3 +59,15 @@ class Metadata:
 
     def get_hand_aspect(self):
         return self.__hand_aspect
+
+    def tolist(self):
+        return [
+            self.__id,
+            self.__age,
+            self.__gender,
+            self.__skin_color,
+            self.__accessories,
+            self.__nail_polish,
+            self.get_hand_aspect(),
+            self.__irregularities,
+        ]
