@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 from src.image_ops.image_shape import ImageShape
 
@@ -15,6 +16,9 @@ def read_img(file_path, color_mode=None):
         color_mode = cv2.IMREAD_UNCHANGED
     return cv2.imread(file_path, color_mode)
 
+
+def write_image(file_path, img):
+    return cv2.imwrite(file_path, img)
 
 def read_img_color(file_path):
     return read_img(file_path, cv2.IMREAD_COLOR)
@@ -84,3 +88,8 @@ def scale_img(img, scale_coefficient: float):
 
 def resize_img(img, width, height):
     return cv2.resize(img, (width, height), interpolation=cv2.INTER_AREA)
+
+
+def mask_color(img, lower, upper):
+    return cv2.inRange(cv2.cvtColor(img, cv2.COLOR_BGR2HSV), np.array(lower, dtype=np.uint8),
+                       np.array(upper, dtype=np.uint8))

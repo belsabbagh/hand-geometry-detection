@@ -1,10 +1,7 @@
 import cv2
 import numpy as np
 
-
-def mask_color(img, lower, upper):
-    return cv2.inRange(cv2.cvtColor(img, cv2.COLOR_BGR2HSV), np.array(lower, dtype=np.uint8),
-                       np.array(upper, dtype=np.uint8))
+from src.image_ops import mask_color
 
 
 def preprocess(frame):
