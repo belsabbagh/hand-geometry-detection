@@ -1,8 +1,7 @@
 from os.path import isfile, join
 
 from src.image_ops.gray_level_transformations import slice_gray_level
-from src.image_ops import read_img, blur_img, convert_to_grayscale
-from src.image_ops.scale_img import scale_img
+from src.image_ops import read_img, blur_img, convert_to_grayscale, scale_img
 
 
 def process_img(_img):

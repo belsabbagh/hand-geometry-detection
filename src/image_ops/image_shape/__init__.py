@@ -12,10 +12,3 @@ class ImageShape:
 
     def __repr__(self):
         return f"Image: {self.width} x {self.height}, {self.channel_count} channels."
-
-
-def get_shape(img):
-    """
-    Gets a dictionary of the image's shape
-    """
-    return ImageShape(img)

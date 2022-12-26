@@ -4,9 +4,7 @@ import os
 import cv2
 
 from src.hand_detector import detect_hand_in_image
-from src.image_ops import read_img
-from src.image_ops.scale_img import scale_img
-
+from src.image_ops import read_img, scale_img
 
 
 def test_detection_on_image(img_path):

@@ -1,6 +1,6 @@
 import cv2
 
-from src.image_ops.get_shape import ImageShape
+from src.image_ops.image_shape import ImageShape
 
 
 def get_shape(img):
@@ -65,3 +65,22 @@ def approx_contour(contour):
 
 def epsilon(contour, coefficient=0.01):
     return coefficient * cv2.arcLength(contour, True)
+
+
+def scale_img(img, scale_coefficient: float):
+    """
+
+    :param img: The given image
+    :type img:
+    :param scale_coefficient: The value to multiply scale by
+    :type scale_coefficient: float
+    :return: The resized image
+    :rtype:
+    """
+    width = int(img.shape[1] * scale_coefficient)
+    height = int(img.shape[0] * scale_coefficient)
+    return resize_img(img, width, height)
+
+
+def resize_img(img, width, height):
+    return cv2.resize(img, (width, height), interpolation=cv2.INTER_AREA)
