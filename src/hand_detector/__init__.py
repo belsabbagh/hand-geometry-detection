@@ -14,8 +14,9 @@ def detect_hand_in_image(img):
     shapes = get_hand_shapes_from_contours(contours)
     for hand_contour, hull in shapes:
         status, points = find_fingers(hand_contour)
-        img = draw_hand_geometry(img, hull, points, hand_contour)
-    print("Fingers", len(points) + 1)
+        if status is True and points is not None:
+            img = draw_hand_geometry(img, hull, points, hand_contour)
+            print("Fingers", len(points) + 1)
     write_image(r'out\detected_hand.png', img)
     cv2.imshow('output', img)
     cv2.waitKey(0)
