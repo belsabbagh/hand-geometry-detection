@@ -1,36 +1,62 @@
+"""
+This module contains the finger detector
+"""
+
 import math
 
 import cv2
+import numpy as np
 
 
-def calculate_fingers(res):
-    #  convexity defect
-    hull = cv2.convexHull(res, returnPoints=False)
+def find_fingers(contour: np.ndarray) -> tuple[bool, list | None]:
+    """Find the shape of fingers of a hand from a contour
+
+    Args:
+        contour (np.ndarray): The contour of the hand
+
+    Returns:
+        tuple[bool, list|None]: A tuple with a boolean indicating if the contour is a hand
+        and a list of points of the connection between fingers.
+    """
+    hull = cv2.convexHull(contour, returnPoints=False)
     if len(hull) <= 3:
-        return False, 0
-    defects = cv2.convexityDefects(res, hull)
+        return False, None
+    defects = cv2.convexityDefects(contour, hull)
     if defects is None:
-        return False, 0
-    points = []
-    for i in range(defects.shape[0]):  # calculate the angle
-        angle, far = calculate_angle_from_defect(defects[i][0], res)
-        if angle <= math.pi / 2:  # angle less than 90 degree, treat as fingers
-            points.append(far)
-    return (True, points) if len(points) > 0 else (True, 0)
+        return False, None
+    points = [pt for angle, pt in [calculate_angle_from_defect(d[0], contour) for d in defects] if angle <= math.pi / 2]
+    return (True, points) if len(points) > 0 else (False, None)
 
 
-def calculate_angle(s, e, f, res):
-    start = tuple(res[s][0])
-    end = tuple(res[e][0])
-    far = tuple(res[f][0])
+def calculate_angle(start: tuple[int, int], end: tuple[int, int], far: tuple[int, int]) -> float:
+    """Calculate the angle using cosine theorem
+
+    Args:
+        start (tuple[int,int]): Start point of the line
+        end (tuple[int,int]): End point of the line
+        far (tuple[int,int]): Point to calculate the angle
+
+    Returns:
+        float: Angle in radians at far point
+    """
     a = math.dist(start, end)
     b = math.dist(start, far)
     c = math.dist(end, far)
-    angle = math.acos((b ** 2 + c ** 2 - a ** 2) / (2 * b * c))  # cosine theorem
-    return angle, far
+    return math.acos((b ** 2 + c ** 2 - a ** 2) / (2 * b * c))
 
 
-def calculate_angle_from_defect(defect, res):
+def calculate_angle_from_defect(defect: np.ndarray, contour: np.ndarray) -> tuple[float, tuple[int, int]]:
+    """Calculate the angle of a convexity defect
+
+    Args:
+        defect (np.ndarray): The convexity defect to calculate the angle for
+        contour (np.ndarray): The contour of the hand
+
+    Returns:
+        tuple[float, tuple[int, int]]: The angle in radians and the far point
+    """
     s, e, f, _ = defect
-    angle, far = calculate_angle(s, e, f, res)
-    return angle, far
+    start = tuple(contour[s][0])
+    end = tuple(contour[e][0])
+    far = tuple(contour[f][0])
+    return calculate_angle(start, end, far), far

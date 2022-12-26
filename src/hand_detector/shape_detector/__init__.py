@@ -1,20 +1,19 @@
 import cv2
+import numpy as np
 
 
-def get_hand_shape(contours):
-    contour = None
-    if len(contours) > 0:
-        contour = get_largest_contour(contours)
-        hull = cv2.convexHull(contour)
-    return contour, hull
+def get_hand_shapes_from_contours(contours):
+    return [(i, cv2.convexHull(i)) for i in contours]
 
 
-def get_largest_contour(contours):
-    max_contour=None
-    max_area = -1
-    for i in contours:
-        area = cv2.contourArea(i)
-        if area > max_area:
-            max_area = area
-            max_contour = i
-    return max_contour
+def get_largest_shape(shapes: list[tuple[np.ndarray, int]]) -> np.ndarray:
+    """Get the largest contour from a list of contours
+
+    Args:
+        shapes (list[tuple[np.ndarray, int]]): A list of tuples of hand contour and hull.
+
+    Returns:
+        np.ndarray: The largest contour
+    """
+    largest_contour = max([(i, cv2.contourArea(i)) for i, _ in shapes], key=lambda item: item[1])
+    return largest_contour[0]
