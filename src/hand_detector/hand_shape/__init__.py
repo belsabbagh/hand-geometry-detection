@@ -1,11 +1,7 @@
 import cv2
 
-from src.hand_detector.finger_detector import find_fingers
+from src.hand_detector.hand_shape.finger_detector import find_fingers, found_fingers
 from src.image_ops import get_convex_hull
-
-
-def found_fingers(status, points):
-    return status is True and points is not None
 
 
 class NotAHandException(Exception):

@@ -60,3 +60,7 @@ def calculate_angle_from_defect(defect: np.ndarray, contour: np.ndarray) -> tupl
     end = tuple(contour[e][0])
     far = tuple(contour[f][0])
     return calculate_angle(start, end, far), far
+
+
+def found_fingers(status, points):
+    return status is True and points is not None
