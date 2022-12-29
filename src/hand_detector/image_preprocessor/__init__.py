@@ -3,8 +3,7 @@ This module is responsible for preprocessing the image before the detection star
 """
 import cv2
 
-from src.image_ops import mask_color, bilateral_filter, create_background_subtractor, subtract_background
-from src.image_ops.morphology import erode
+from src.image_ops import mask_color, bilateral_filter
 
 
 def preprocess(_img):
@@ -17,6 +16,7 @@ def preprocess(_img):
     result = binarize_skin(bilateral_filter(_img, 5, 50, 100))
     cv2.imshow('Preprocessed Image', result)
     return result
+
 
 def binarize_skin(img):
     return mask_color(img, [0, 48, 80], [20, 255, 255])

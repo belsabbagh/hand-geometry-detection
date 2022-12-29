@@ -112,3 +112,7 @@ def create_background_subtractor():
 
 def subtract_background(img, subtractor):
     return subtractor.apply(img)
+
+
+def get_convex_hull(contour):
+    return cv2.convexHull(contour)
