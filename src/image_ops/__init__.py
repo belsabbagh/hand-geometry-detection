@@ -93,3 +93,22 @@ def resize_img(img, width, height):
 def mask_color(img, lower, upper):
     return cv2.inRange(cv2.cvtColor(img, cv2.COLOR_BGR2HSV), np.array(lower, dtype=np.uint8),
                        np.array(upper, dtype=np.uint8))
+
+
+def bitwise_and(img1, img2, mask):
+    return cv2.bitwise_and(img1, img2, mask=mask)
+
+
+def bilateral_filter(_img, diameter_of_neighborhood, sigma_color, sigma_space):
+    """
+    A bilateral filter is used for smoothening images and reducing noise, while preserving edges.
+    """
+    return cv2.bilateralFilter(_img, diameter_of_neighborhood, sigma_color, sigma_space)
+
+
+def create_background_subtractor():
+    return cv2.createBackgroundSubtractorMOG2(0, 50)
+
+
+def subtract_background(img, subtractor):
+    return subtractor.apply(img)

@@ -18,3 +18,8 @@ def morph_close(img, kernel=None, kernel_size=None):
 
 def morph_gradient(img, kernel=None, kernel_size=None):
     return morph(img, cv2.MORPH_GRADIENT, kernel, kernel_size)
+
+def erode(img, kernel=None, iterations=1):
+    if kernel is None:
+        kernel = np.ones((3,3), np.uint8)
+    return cv2.erode(img, kernel, iterations=iterations)

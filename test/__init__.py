@@ -1,7 +1,4 @@
-import glob
 import os
-
-import cv2
 
 from src.hand_detector import detect_hand_in_image
 from src.image_ops import read_img
