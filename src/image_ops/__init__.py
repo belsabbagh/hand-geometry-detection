@@ -20,6 +20,7 @@ def read_img(file_path, color_mode=None):
 def write_image(file_path, img):
     return cv2.imwrite(file_path, img)
 
+
 def read_img_color(file_path):
     return read_img(file_path, cv2.IMREAD_COLOR)
 
@@ -116,3 +117,6 @@ def subtract_background(img, subtractor):
 
 def get_convex_hull(contour):
     return cv2.convexHull(contour)
+
+def get_area_of_contour(contour):
+    return cv2.contourArea(contour)

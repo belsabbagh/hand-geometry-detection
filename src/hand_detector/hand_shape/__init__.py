@@ -1,7 +1,7 @@
 import cv2
 
 from src.hand_detector.hand_shape.finger_detector import find_fingers, found_fingers
-from src.image_ops import get_convex_hull
+from src.image_ops import get_convex_hull, get_area_of_contour
 
 
 class NotAHandException(Exception):
@@ -17,4 +17,4 @@ class HandShape:
         self.contour = contour
         self.points = points
         self.hull = hull if hull is not None else get_convex_hull(contour)
-        self.area = cv2.contourArea(self.contour)
+        self.area = get_area_of_contour(self.contour)
