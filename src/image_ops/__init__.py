@@ -92,8 +92,13 @@ def resize_img(img, width, height):
 
 
 def mask_color(img, lower, upper):
-    return cv2.inRange(cv2.cvtColor(img, cv2.COLOR_BGR2HSV), np.array(lower, dtype=np.uint8),
-                       np.array(upper, dtype=np.uint8))
+    imghsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    mask = cv2.inRange(
+        imghsv, np.array(lower, dtype=np.uint8), np.array(upper, dtype=np.uint8)
+    )
+    mask = cv2.blur(mask, (2, 2))
+    _, thresh = cv2.threshold(mask, 100, 255, cv2.THRESH_BINARY)
+    return thresh
 
 
 def bitwise_and(img1, img2, mask):
@@ -117,6 +122,7 @@ def subtract_background(img, subtractor):
 
 def get_convex_hull(contour):
     return cv2.convexHull(contour)
+
 
 def get_area_of_contour(contour):
     return cv2.contourArea(contour)
